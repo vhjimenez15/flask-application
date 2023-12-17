@@ -1,7 +1,11 @@
-from flask import Blueprint, Flask
+from flask import Flask, jsonify
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
+from flask_swagger_ui import get_swaggerui_blueprint
 from config import config
+import json
 
 # type enviroment
 enviroment = config['development']
@@ -14,6 +18,8 @@ app.config.from_object('config.DevelopmentConfig')
 # Initialize db
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
 
 
 # vistas

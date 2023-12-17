@@ -12,6 +12,7 @@ class BaseConfig:
     SECRET_KEY = os.environ['SECRET_KEY']
     PROPAGATE_EXCEPTIONS = True
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
+    JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
 
 
 class DevelopmentConfig(BaseConfig):

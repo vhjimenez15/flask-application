@@ -1,5 +1,6 @@
+from app import db
 from flask import Blueprint, jsonify, request
-from app import app, db
+from flask_jwt_extended import jwt_required
 from app.elements.models import ElementsToProcess
 from app.elements.schemas import ElementsToProcessSchema
 
@@ -7,6 +8,7 @@ elementBp = Blueprint('element', __name__)
 
 
 @elementBp.route("/element/list/<id>", methods=['GET'])
+@jwt_required()
 def list_one_elements_to_process(id):
     elements_to_process = ElementsToProcess.query.get(id)
     schema = ElementsToProcessSchema()
@@ -18,6 +20,7 @@ def list_one_elements_to_process(id):
     )
 
 @elementBp.route("/element/list", methods=['GET'])
+@jwt_required()
 def list_elements_to_process():
     elements_to_process = ElementsToProcess.query.all()
     schema = ElementsToProcessSchema(many=True)
@@ -29,6 +32,7 @@ def list_elements_to_process():
     )
 
 @elementBp.route("/element/create", methods=['POST'])
+@jwt_required()
 def create_elements_to_process():
     data = request.json
     name = data.get('name')
@@ -42,6 +46,7 @@ def create_elements_to_process():
     return jsonify({'message': 'Successful'})
 
 @elementBp.route("/element/update/<id>", methods=['PUT'])
+@jwt_required()
 def update_elements_to_process(id):
     data = request.json
     elements_to_process = ElementsToProcess.query.get(id)
@@ -64,6 +69,7 @@ def update_elements_to_process(id):
     return jsonify({'message': 'Successful'})
 
 @elementBp.route("/element/delete/<id>", methods=['DELETE'])
+@jwt_required()
 def delete_elements_to_process(id):
     elements_to_process = ElementsToProcess.query.get(id)
     if not elements_to_process:
